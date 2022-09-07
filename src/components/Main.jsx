@@ -5,8 +5,8 @@ import Input from './Input';
 export default function Main() {
 	const [allMemesArr, setAllMemesArr] = React.useState([]);
 	const [meme, setMeme] = React.useState({
-		topText: '11',
-		bottomText: '22',
+		topText: '',
+		bottomText: '',
 		randomImage: 'https://i.imgflip.com/30b1gx.jpg'
 	});
 
