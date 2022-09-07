@@ -122,7 +122,7 @@ body {
 
 .meme-text {
 	position: absolute;
-	width: 80%;
+	width: 70%;
 	text-align: center;
 	left: 50%;
 	transform: translateX(-50%);

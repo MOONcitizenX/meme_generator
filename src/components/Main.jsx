@@ -7,7 +7,7 @@ export default function Main() {
 	const [meme, setMeme] = React.useState({
 		topText: '',
 		bottomText: '',
-		randomImage: 'https://i.imgflip.com/30b1gx.jpg'
+		randomImage: 'https://i.imgflip.com/1bh3.jpg'
 	});
 
 	const handleChange = (event) => {
@@ -59,8 +59,12 @@ export default function Main() {
 			/>
 			<div className="meme-container">
 				<img src={meme.randomImage} alt="123" className="meme-image" />
-				<p className="meme-text top-text">{meme.topText}</p>
-				<p className="meme-text bottom-text">{meme.bottomText}</p>
+				<p className="meme-text top-text">
+					{meme.topText || 'Top Text'}
+				</p>
+				<p className="meme-text bottom-text">
+					{meme.bottomText || 'Bottom Text'}
+				</p>
 			</div>
 		</div>
 	);
