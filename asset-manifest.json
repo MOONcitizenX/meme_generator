@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/meme_generator/static/css/main.dbe4949b.css",
-    "main.js": "/meme_generator/static/js/main.0b291b8f.js",
+    "main.js": "/meme_generator/static/js/main.e7e1cade.js",
     "static/media/karla-v23-latin-700.woff": "/meme_generator/static/media/karla-v23-latin-700.5ede22a98e20e010c9e7.woff",
     "static/media/karla-v23-latin-regular.woff": "/meme_generator/static/media/karla-v23-latin-regular.4531be87a6ff25d0867f.woff",
     "static/media/karla-v23-latin-700.woff2": "/meme_generator/static/media/karla-v23-latin-700.7e0b881d89bb036cdc7c.woff2",
     "static/media/karla-v23-latin-regular.woff2": "/meme_generator/static/media/karla-v23-latin-regular.93d013a97f8b0389ff8f.woff2",
     "index.html": "/meme_generator/index.html",
     "main.dbe4949b.css.map": "/meme_generator/static/css/main.dbe4949b.css.map",
-    "main.0b291b8f.js.map": "/meme_generator/static/js/main.0b291b8f.js.map"
+    "main.e7e1cade.js.map": "/meme_generator/static/js/main.e7e1cade.js.map"
   },
   "entrypoints": [
     "static/css/main.dbe4949b.css",
-    "static/js/main.0b291b8f.js"
+    "static/js/main.e7e1cade.js"
   ]
 }
