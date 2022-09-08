@@ -60,6 +60,23 @@ body {
 	flex-direction: column;
 	gap: 20px;
 }
+
+@media (max-width: 1000px) {
+	.main {
+		max-width: 70%;
+	}
+}
+@media (max-width: 768px) {
+	.main {
+		max-width: 80%;
+	}
+}
+@media (max-width: 480px) {
+	.main {
+		max-width: 100%;
+	}
+}
+
 .text-input_container {
 	display: flex;
 	gap: 10px;
@@ -112,7 +129,7 @@ body {
 }
 
 .meme-image {
-	height: 100%;
+	width: 100%;
 	/* width: max-content; */
 	max-width: 1000px;
 	border-radius: 10px;
