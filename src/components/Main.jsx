@@ -92,13 +92,15 @@ export default function Main() {
 			})}
 			<Button
 				name="addInput"
-				buttonText="Add another text"
+				buttonText={
+					memeInputs.length ? 'Add another text' : 'Add meme text'
+				}
 				handleClick={handleClickAdd}
 				className="wide-button"
 			/>
 			<Button
 				name="getImage"
-				buttonText="Get new random image"
+				buttonText="Get random meme image"
 				handleClick={getNewImage}
 				className="wide-button"
 			/>
