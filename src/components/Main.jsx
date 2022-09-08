@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from './Button';
 import Input from './Input';
+import Draggable from 'react-draggable';
 
 export default function Main() {
 	const [allMemesArr, setAllMemesArr] = React.useState([]);
@@ -26,8 +27,6 @@ export default function Main() {
 			randomImage: url
 		}));
 	};
-	console.log(allMemesArr);
-	console.log(meme);
 
 	React.useEffect(() => {
 		fetch('https://api.imgflip.com/get_memes')
@@ -59,12 +58,16 @@ export default function Main() {
 			/>
 			<div className="meme-container">
 				<img src={meme.randomImage} alt="123" className="meme-image" />
-				<p className="meme-text top-text">
-					{meme.topText || 'Top Text'}
-				</p>
-				<p className="meme-text bottom-text">
-					{meme.bottomText || 'Bottom Text'}
-				</p>
+				<Draggable>
+					<p className="meme-text top-text">
+						{meme.topText || 'Top Text'}
+					</p>
+				</Draggable>
+				<Draggable>
+					<p className="meme-text bottom-text">
+						{meme.bottomText || 'Bottom Text'}
+					</p>
+				</Draggable>
 			</div>
 		</div>
 	);
