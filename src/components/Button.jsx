@@ -4,7 +4,7 @@ export default function Button(props) {
 	return (
 		<button
 			name={props.name}
-			className="wide-button"
+			className={props.className}
 			onClick={props.handleClick}
 		>
 			{props.buttonText}
