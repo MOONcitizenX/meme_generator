@@ -108,7 +108,7 @@ export default function Main() {
 				<img src={meme.randomImage} alt="123" className="meme-image" />
 				{memeInputs.map((item) => {
 					return (
-						<Draggable key={`${item.id}MemeText`}>
+						<Draggable key={`${item.id}MemeText`} bounds="parent">
 							<p className="meme-text">
 								{memeText[`${item.id}`]}
 							</p>
