@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from './Button';
 import Input from './Input';
 import Draggable from 'react-draggable';
 
 export default function Main() {
-	const [allMemesArr, setAllMemesArr] = React.useState([]);
-	const [idCounter, setIdCounter] = React.useState(1);
-	const [memeInputs, setMemeInputs] = React.useState([
+	const [allMemesArr, setAllMemesArr] = useState([]);
+	const [idCounter, setIdCounter] = useState(1);
+	const [memeInputs, setMemeInputs] = useState([
 		{
 			id: `Text ${idCounter}`,
 			placeholder: `Text ${idCounter}`
 		}
 	]);
-	const [meme, setMeme] = React.useState({
+	const [meme, setMeme] = useState({
 		randomImage: 'https://i.imgflip.com/1bh3.jpg'
 	});
 
-	const [memeText, setMemeText] = React.useState({
+	const [memeText, setMemeText] = useState({
 		[`Text ${idCounter}`]: `Text ${idCounter}`
 	});
 
@@ -60,11 +60,11 @@ export default function Main() {
 		}));
 	};
 
-	React.useEffect(() => {
+	useEffect(() => {
 		!memeInputs.length && setIdCounter(0);
 	}, [memeInputs]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		fetch('https://api.imgflip.com/get_memes')
 			.then((res) => res.json())
 			.then((data) => setAllMemesArr(data.data.memes));
