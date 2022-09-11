@@ -13,7 +13,8 @@ export default function Main() {
 		}
 	]);
 	const [meme, setMeme] = useState({
-		randomImage: 'https://i.imgflip.com/1bh3.jpg'
+		currentIndex: 0,
+		randomImage: ''
 	});
 
 	const [memeText, setMemeText] = useState({
@@ -52,10 +53,42 @@ export default function Main() {
 		}));
 	};
 
-	const getNewImage = () => {
+	const getNextMeme = () => {
+		setMeme((prevMeme) => ({
+			currentIndex:
+				prevMeme.currentIndex === allMemesArr.length - 1
+					? 0
+					: prevMeme.currentIndex + 1,
+			randomImage:
+				allMemesArr[
+					prevMeme.currentIndex === allMemesArr.length - 1
+						? 0
+						: prevMeme.currentIndex + 1
+				].url
+		}));
+	};
+	console.log(meme.currentIndex);
+
+	const getPrevMeme = () => {
+		setMeme((prevMeme) => ({
+			currentIndex:
+				prevMeme.currentIndex === 0
+					? allMemesArr.length - 1
+					: prevMeme.currentIndex - 1,
+			randomImage:
+				allMemesArr[
+					prevMeme.currentIndex === 0
+						? allMemesArr.length - 1
+						: prevMeme.currentIndex - 1
+				].url
+		}));
+	};
+
+	const getNewRandomImage = () => {
 		const randomNumber = Math.floor(Math.random() * allMemesArr.length);
 		const url = allMemesArr[randomNumber].url;
 		setMeme((prevMeme) => ({
+			currentIndex: randomNumber,
 			randomImage: url
 		}));
 	};
@@ -65,13 +98,21 @@ export default function Main() {
 	}, [memeInputs]);
 
 	useEffect(() => {
+		let someUrl = '';
 		fetch('https://api.imgflip.com/get_memes')
 			.then((res) => res.json())
-			.then((data) => setAllMemesArr(data.data.memes));
+			.then((data) => {
+				someUrl = data.data.memes[0].url;
+				setAllMemesArr(data.data.memes);
+				setMeme({
+					currentIndex: 0,
+					randomImage: someUrl
+				});
+			});
 	}, []);
 
 	return (
-		<div className="main">
+		<main className="main">
 			{memeInputs.map((item) => {
 				return (
 					<div key={item.id} className="text-input_container">
@@ -98,12 +139,26 @@ export default function Main() {
 				handleClick={handleClickAdd}
 				className="wide-button"
 			/>
-			<Button
-				name="getImage"
-				buttonText="Get random meme image"
-				handleClick={getNewImage}
-				className="wide-button"
-			/>
+			<div className="control-buttons-container">
+				<Button
+					name="getImage"
+					buttonText="Get random meme image"
+					handleClick={getNewRandomImage}
+					className="wide-button grow"
+				/>
+				<Button
+					name="getPrevImage"
+					buttonText="<"
+					handleClick={getPrevMeme}
+					className="wide-button more-padding"
+				/>
+				<Button
+					name="getNextImage"
+					buttonText=">"
+					handleClick={getNextMeme}
+					className="wide-button more-padding"
+				/>
+			</div>
 			<div className="meme-container">
 				<img src={meme.randomImage} alt="123" className="meme-image" />
 				{memeInputs.map((item) => {
@@ -116,6 +171,6 @@ export default function Main() {
 					);
 				})}
 			</div>
-		</div>
+		</main>
 	);
 }
