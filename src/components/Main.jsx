@@ -67,7 +67,6 @@ export default function Main() {
 				].url
 		}));
 	};
-	console.log(meme.currentIndex);
 
 	const getPrevMeme = () => {
 		setMeme((prevMeme) => ({
