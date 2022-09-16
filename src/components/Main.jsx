@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Button from './Button';
 import Input from './Input';
 import Draggable from 'react-draggable';
+import { exportComponentAsJPEG } from 'react-component-export-image';
 
 export default function Main() {
 	const [allMemesArr, setAllMemesArr] = useState([]);
@@ -92,6 +93,12 @@ export default function Main() {
 		}));
 	};
 
+	const printRef = useRef();
+
+	const getFullImage = (ref) => {
+		exportComponentAsJPEG(ref, { fileName: 'my_meme.jpg' });
+	};
+
 	useEffect(() => {
 		!memeInputs.length && setIdCounter(0);
 	}, [memeInputs]);
@@ -158,7 +165,7 @@ export default function Main() {
 					className="wide-button more-padding"
 				/>
 			</div>
-			<div className="meme-container">
+			<div className="meme-container" ref={printRef}>
 				<img src={meme.randomImage} alt="123" className="meme-image" />
 				{memeInputs.map((item) => {
 					return (
@@ -170,6 +177,12 @@ export default function Main() {
 					);
 				})}
 			</div>
+			<Button
+				name="getFullImage"
+				buttonText="Download Meme"
+				handleClick={() => getFullImage(printRef)}
+				className="wide-button"
+			/>
 		</main>
 	);
 }

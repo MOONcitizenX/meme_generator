@@ -127,7 +127,6 @@ body {
 
 .meme-image {
 	width: 100%;
-	/* width: max-content; */
 	max-width: 1000px;
 	border-radius: 10px;
 	text-align: center;
