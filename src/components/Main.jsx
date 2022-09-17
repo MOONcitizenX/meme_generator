@@ -96,7 +96,9 @@ export default function Main() {
 	const printRef = useRef();
 
 	const getFullImage = (ref) => {
-		exportComponentAsJPEG(ref, { fileName: 'my_meme.jpg' });
+		exportComponentAsJPEG(ref, {
+			fileName: `${allMemesArr[meme.currentIndex].name}.jpg`
+		});
 	};
 
 	useEffect(() => {
