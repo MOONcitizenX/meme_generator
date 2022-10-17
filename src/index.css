@@ -183,7 +183,12 @@ body {
 	flex-shrink: 1;
 }
 
-/* Hide the browser's default checkbox */
+@media screen and (max-width: 780px) {
+	.container {
+		font-size: 12px;
+	}
+}
+
 .container input {
 	position: absolute;
 	opacity: 0;
@@ -192,7 +197,6 @@ body {
 	width: 0;
 }
 
-/* Create a custom checkbox */
 .checkmark {
 	position: absolute;
 	top: 50%;
@@ -208,24 +212,20 @@ body {
 	background-color: #ccc;
 }
 
-/* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
 	background: linear-gradient(90.41deg, #711f8d 1.14%, #a818da 100%);
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
 	content: '';
 	position: absolute;
 	display: none;
 }
 
-/* Show the checkmark when checked */
 .container input:checked ~ .checkmark:after {
 	display: block;
 }
 
-/* Style the checkmark/indicator */
 .container .checkmark:after {
 	left: 9px;
 	top: 5px;
