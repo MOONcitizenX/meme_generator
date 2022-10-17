@@ -170,6 +170,10 @@ export default function Main() {
 				handleClick={handleClickAdd}
 				className="wide-button"
 			/>
+			<RefreshCheckbox
+				handleChange={handleIsCheckedReset}
+				checked={isResetChecked}
+			></RefreshCheckbox>
 			<div className="control-buttons-container">
 				<Button
 					name="getImage"
@@ -177,10 +181,7 @@ export default function Main() {
 					handleClick={getNewRandomImage}
 					className="wide-button grow"
 				/>
-				<RefreshCheckbox
-					handleChange={handleIsCheckedReset}
-					checked={isResetChecked}
-				></RefreshCheckbox>
+
 				<Button
 					name="getPrevImage"
 					buttonText="<"
