@@ -3,10 +3,12 @@ import Button from './Button';
 import Input from './Input';
 import Draggable from 'react-draggable';
 import { exportComponentAsJPEG } from 'react-component-export-image';
+import { RefreshCheckbox } from './RefreshCheckbox';
 
 export default function Main() {
 	const [allMemesArr, setAllMemesArr] = useState([]);
 	const [idCounter, setIdCounter] = useState(1);
+	const [isResetChecked, setIsRefreshChecked] = useState(false);
 	const [memeInputs, setMemeInputs] = useState([
 		{
 			id: `Text ${idCounter}`,
@@ -54,7 +56,26 @@ export default function Main() {
 		}));
 	};
 
+	const handleIsCheckedReset = () => {
+		setIsRefreshChecked((prev) => !prev);
+	};
+
+	const resetAllTextInputs = (isResetChecked) => {
+		if (isResetChecked) {
+			setIdCounter(1);
+			setMemeInputs([
+				{
+					id: `Text ${1}`,
+					placeholder: `Text ${1}`
+				}
+			]);
+		} else {
+			return;
+		}
+	};
+
 	const getNextMeme = () => {
+		resetAllTextInputs(isResetChecked);
 		setMeme((prevMeme) => ({
 			currentIndex:
 				prevMeme.currentIndex === allMemesArr.length - 1
@@ -70,6 +91,7 @@ export default function Main() {
 	};
 
 	const getPrevMeme = () => {
+		resetAllTextInputs(isResetChecked);
 		setMeme((prevMeme) => ({
 			currentIndex:
 				prevMeme.currentIndex === 0
@@ -85,6 +107,7 @@ export default function Main() {
 	};
 
 	const getNewRandomImage = () => {
+		resetAllTextInputs(isResetChecked);
 		const randomNumber = Math.floor(Math.random() * allMemesArr.length);
 		const url = allMemesArr[randomNumber].url;
 		setMeme((prevMeme) => ({
@@ -154,6 +177,10 @@ export default function Main() {
 					handleClick={getNewRandomImage}
 					className="wide-button grow"
 				/>
+				<RefreshCheckbox
+					handleChange={handleIsCheckedReset}
+					checked={isResetChecked}
+				></RefreshCheckbox>
 				<Button
 					name="getPrevImage"
 					buttonText="<"
