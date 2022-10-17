@@ -1,15 +1,15 @@
 import React from 'react';
 
-export default function Input(props) {
+export default function Input({ placeholder, name, value, handleChange }) {
 	return (
 		<>
 			<input
 				type="text"
-				placeholder={props.placeholder}
+				placeholder={placeholder}
 				className="text-input"
-				name={props.name}
-				value={props.value}
-				onChange={props.handleChange}
+				name={name}
+				value={value}
+				onChange={handleChange}
 			/>
 		</>
 	);
