@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Button from './Button';
-import Input from './Input';
-import Draggable from 'react-draggable';
-import { exportComponentAsJPEG } from 'react-component-export-image';
-import { RefreshCheckbox } from './RefreshCheckbox';
+import React, { useState, useEffect } from 'react';
+import { Controls } from './Controls';
+import { TextInputs } from './TextInputs';
+import { MemeImageContainer } from './MemeImageContainer';
+import { StateContext } from '../context/context';
 
 export default function Main() {
 	const [allMemesArr, setAllMemesArr] = useState([]);
@@ -24,104 +23,19 @@ export default function Main() {
 		[`Text ${idCounter}`]: `Text ${idCounter}`
 	});
 
-	const handleClickDelete = (event) => {
-		const name = event.target.name.split(' ').splice(0, 2).join(' ');
-		setMemeInputs((prev) => prev.filter((el) => el.id !== name));
-	};
-
-	const handleClickAdd = () => {
-		let tempCounter = idCounter + 1;
-		setIdCounter((prev) => prev + 1);
-		setMemeInputs((prevInput) => {
-			return [
-				...prevInput,
-				{
-					id: `Text ${tempCounter}`,
-					placeholder: `Text ${tempCounter}`
-				}
-			];
-		});
-		setMemeText((prevMemeText) => ({
-			...prevMemeText,
-			[`Text ${tempCounter}`]: `Text ${tempCounter}`
-		}));
-		setIdCounter(tempCounter);
-	};
-
-	const handleChange = (event) => {
-		const { name, value } = event.target;
-		setMemeText((prevMemeText) => ({
-			...prevMemeText,
-			[name]: value
-		}));
-	};
-
-	const handleIsCheckedReset = () => {
-		setIsRefreshChecked((prev) => !prev);
-	};
-
-	const resetAllTextInputs = (isResetChecked) => {
-		if (isResetChecked) {
-			setIdCounter(1);
-			setMemeInputs([
-				{
-					id: `Text ${1}`,
-					placeholder: `Text ${1}`
-				}
-			]);
-		} else {
-			return;
-		}
-	};
-
-	const getNextMeme = () => {
-		resetAllTextInputs(isResetChecked);
-		setMeme((prevMeme) => ({
-			currentIndex:
-				prevMeme.currentIndex === allMemesArr.length - 1
-					? 0
-					: prevMeme.currentIndex + 1,
-			randomImage:
-				allMemesArr[
-					prevMeme.currentIndex === allMemesArr.length - 1
-						? 0
-						: prevMeme.currentIndex + 1
-				].url
-		}));
-	};
-
-	const getPrevMeme = () => {
-		resetAllTextInputs(isResetChecked);
-		setMeme((prevMeme) => ({
-			currentIndex:
-				prevMeme.currentIndex === 0
-					? allMemesArr.length - 1
-					: prevMeme.currentIndex - 1,
-			randomImage:
-				allMemesArr[
-					prevMeme.currentIndex === 0
-						? allMemesArr.length - 1
-						: prevMeme.currentIndex - 1
-				].url
-		}));
-	};
-
-	const getNewRandomImage = () => {
-		resetAllTextInputs(isResetChecked);
-		const randomNumber = Math.floor(Math.random() * allMemesArr.length);
-		const url = allMemesArr[randomNumber].url;
-		setMeme((prevMeme) => ({
-			currentIndex: randomNumber,
-			randomImage: url
-		}));
-	};
-
-	const printRef = useRef();
-
-	const getFullImage = (ref) => {
-		exportComponentAsJPEG(ref, {
-			fileName: `${allMemesArr[meme.currentIndex].name}.jpg`
-		});
+	const MyStates = {
+		allMemesArr,
+		setAllMemesArr,
+		meme,
+		setMeme,
+		memeInputs,
+		setMemeInputs,
+		isResetChecked,
+		setIsRefreshChecked,
+		idCounter,
+		setIdCounter,
+		memeText,
+		setMemeText
 	};
 
 	useEffect(() => {
@@ -144,75 +58,14 @@ export default function Main() {
 
 	return (
 		<main className="main">
-			{memeInputs.map((item) => {
-				return (
-					<div key={item.id} className="text-input_container">
-						<Input
-							placeholder={item.placeholder}
-							name={item.id}
-							handleChange={handleChange}
-							value={meme.topText}
-						/>
-						<Button
-							name={`${item.id} delete`}
-							className="wide-button"
-							handleClick={handleClickDelete}
-							buttonText="Delete"
-						></Button>
-					</div>
-				);
-			})}
-			<Button
-				name="addInput"
-				buttonText={
-					memeInputs.length ? 'Add another text' : 'Add meme text'
-				}
-				handleClick={handleClickAdd}
-				className="wide-button"
-			/>
-			<RefreshCheckbox
-				handleChange={handleIsCheckedReset}
-				checked={isResetChecked}
-			></RefreshCheckbox>
-			<div className="control-buttons-container">
-				<Button
-					name="getImage"
-					buttonText="Get random meme image"
-					handleClick={getNewRandomImage}
-					className="wide-button grow"
-				/>
-
-				<Button
-					name="getPrevImage"
-					buttonText="<"
-					handleClick={getPrevMeme}
-					className="wide-button more-padding"
-				/>
-				<Button
-					name="getNextImage"
-					buttonText=">"
-					handleClick={getNextMeme}
-					className="wide-button more-padding"
-				/>
-			</div>
-			<div className="meme-container" ref={printRef}>
-				<img src={meme.randomImage} alt="123" className="meme-image" />
+			<StateContext.Provider value={MyStates}>
 				{memeInputs.map((item) => {
-					return (
-						<Draggable key={`${item.id}MemeText`} bounds="parent">
-							<p className="meme-text">
-								{memeText[`${item.id}`]}
-							</p>
-						</Draggable>
-					);
+					return <TextInputs item={item} key={item.id}></TextInputs>;
 				})}
-			</div>
-			<Button
-				name="getFullImage"
-				buttonText="Download Meme"
-				handleClick={() => getFullImage(printRef)}
-				className="wide-button"
-			/>
+
+				<Controls></Controls>
+				<MemeImageContainer></MemeImageContainer>
+			</StateContext.Provider>
 		</main>
 	);
 }
